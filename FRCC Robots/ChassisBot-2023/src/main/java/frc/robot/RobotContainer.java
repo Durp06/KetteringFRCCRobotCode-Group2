@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -22,6 +23,7 @@ import frc.robot.subsystems.AuxSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -65,7 +67,15 @@ public class RobotContainer {
     // Setup shuffleboard "Main Dashboard"
     setupShuffleboardDashboard();
 
-    autonSelector.addOption("Straight", new TimeDriveCommand(m_driveSubsystem, 6, 1, 1));
+    autonSelector.addOption("Straight", new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3));
+    
+    autonSelector.addOption("Straight n' turn", new SequentialCommandGroup(
+      new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3),
+      new TimeDriveCommand(m_driveSubsystem, 3, -0.3, 0.3),
+      new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3)
+      ));
+
+
 
     SmartDashboard.putData("Auton Selector", autonSelector);
   }
