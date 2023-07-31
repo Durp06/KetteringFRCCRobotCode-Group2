@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AvalButtons;
 import frc.robot.Constants.AvalDriveModes;
 import frc.robot.commands.AuxCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.TimeDriveCommand;
 import frc.robot.subsystems.AuxSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -49,6 +52,7 @@ public class RobotContainer {
   private final AuxCommand m_aux5Command = new AuxCommand(m_aux5, m_stick0, m_stick1, "PWM8");
   private final AuxCommand m_aux6Command = new AuxCommand(m_aux6, m_stick0, m_stick1, "PWM9");
 
+  private SendableChooser<Command> autonSelector = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -60,6 +64,10 @@ public class RobotContainer {
 
     // Setup shuffleboard "Main Dashboard"
     setupShuffleboardDashboard();
+
+    autonSelector.addOption("Do thing", new TimeDriveCommand(m_driveSubsystem, 6, 1, 1));
+
+    SmartDashboard.putData("Auton Selector", autonSelector);
   }
 
   // Set Subsystem Default Commands

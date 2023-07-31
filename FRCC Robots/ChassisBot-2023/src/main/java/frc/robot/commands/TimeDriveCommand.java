@@ -6,13 +6,13 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class TimeDriveCommand extends CommandBase {
     private Timer timer;
-    private double leftSpeed, rightSpeed, stopTime;
+    private double leftSpeed, rightSpeed, durrationTime;
     private DriveSubsystem ss;
     
-    public TimeDriveCommand(DriveSubsystem ss, double stopTime, double leftSpeed, double rightSpeed){
+    public TimeDriveCommand(DriveSubsystem ss, double durrationTime, double leftSpeed, double rightSpeed){
         addRequirements(ss);
         this.ss = ss;
-        this.stopTime = stopTime;
+        this.durrationTime = durrationTime;
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
         timer = new Timer();
@@ -36,7 +36,7 @@ public class TimeDriveCommand extends CommandBase {
 
     @Override
     public boolean isFinished(){
-        return timer.get()>=stopTime;
+        return timer.get()>=durrationTime;
     }
 }
 
