@@ -20,13 +20,14 @@ public class NSidedShape extends CommandBase {
 
     @Override
     public void initialize(){
-        degreesToTurn = 360 / sides;
+        degreesToTurn = 2.5 / sides;
         durrationTime = 4;
-        ss.tankDrive(0.5, 0.5);
+        for(double i=sides ; i<0 ; --i) {
+        new TimeDriveCommand(ss, 2, 0.5, 0.5);
+        new TimeDriveCommand(ss, degreesToTurn, 0.5, -0.5);
+        }        
         timer.reset();
         timer.start();
-        //Use degreesToTurn to turn the appropriate amount with the gyro(on tuesday)
-        //LOOP {sides} times
     }
 
     @Override
