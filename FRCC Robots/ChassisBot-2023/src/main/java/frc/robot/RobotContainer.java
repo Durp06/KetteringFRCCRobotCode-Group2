@@ -65,7 +65,7 @@ public class RobotContainer {
     // Setup shuffleboard "Main Dashboard"
     setupShuffleboardDashboard();
 
-    autonSelector.addOption("Do thing", new TimeDriveCommand(m_driveSubsystem, 6, 1, 1));
+    autonSelector.addOption("Straight", new TimeDriveCommand(m_driveSubsystem, 6, 1, 1));
 
     SmartDashboard.putData("Auton Selector", autonSelector);
   }
@@ -209,6 +209,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return autonSelector.getSelected();
   }
 }
