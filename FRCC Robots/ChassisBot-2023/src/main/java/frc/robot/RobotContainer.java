@@ -76,7 +76,7 @@ public class RobotContainer {
       new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3)
       ));
 
-    autonSelector.addOption("N Sided Shape", new NSidedShape(m_driveSubsystem, 4));
+      autonSelector.addOption("NSidedShape", new NSidedShape(m_driveSubsystem, 4));
 
     SmartDashboard.putData("Auton Selector", autonSelector);
   }
