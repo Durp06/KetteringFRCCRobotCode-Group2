@@ -18,6 +18,7 @@ import frc.robot.Constants.AvalButtons;
 import frc.robot.Constants.AvalDriveModes;
 import frc.robot.commands.AuxCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.NSidedShape;
 import frc.robot.commands.TimeDriveCommand;
 import frc.robot.subsystems.AuxSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -75,7 +76,7 @@ public class RobotContainer {
       new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3)
       ));
 
-
+    autonSelector.addOption("N Sided Shape", new NSidedShape(m_driveSubsystem, 4));
 
     SmartDashboard.putData("Auton Selector", autonSelector);
   }

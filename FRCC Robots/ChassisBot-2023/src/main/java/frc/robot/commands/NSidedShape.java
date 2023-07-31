@@ -13,15 +13,13 @@ public class NSidedShape extends CommandBase {
         addRequirements(ss);
         this.ss = ss;
         this.sides = sides;
-        this.durrationTime = durrationTime;
-        this.degreesToTurn = degreesToTurn;
         timer = new Timer();
     }
 
     @Override
     public void initialize(){
         degreesToTurn = 2.5 / sides;
-        durrationTime = 4;
+        durrationTime = 10;
         for(double i=sides ; i<0 ; --i) {
         new TimeDriveCommand(ss, 2, 0.5, 0.5);
         new TimeDriveCommand(ss, degreesToTurn, 0.5, -0.5);
