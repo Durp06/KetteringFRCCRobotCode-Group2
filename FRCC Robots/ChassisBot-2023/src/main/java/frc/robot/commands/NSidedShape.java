@@ -8,7 +8,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class NSidedShape extends SequentialCommandGroup {
     private Timer timer;
-    private double sides, durrationTime, degreesToTurn;
+    private double sides, durrationTime;
     private DriveSubsystem ss;
 
     private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
@@ -17,7 +17,6 @@ public class NSidedShape extends SequentialCommandGroup {
         // this.ss = ss;
         // this.sides = sides;
         timer = new Timer();
-        degreesToTurn = 360 / sides;
         durrationTime = 10;
         timer.reset();
         timer.start();
@@ -26,7 +25,7 @@ public class NSidedShape extends SequentialCommandGroup {
             addCommands(
                 new TimeDriveCommand(ss, 2, 0.3, 0.3),
                 //new GyroStraight(ss, sides, i, gyro)
-                new GyroTurn(ss, degreesToTurn, .3, gyro)
+                new GyroTurn(ss, 360/sides, .3, gyro)
             );
             if (timer.get()>=durrationTime){
                 break;
