@@ -9,7 +9,7 @@ public class GyroStraight extends CommandBase {
     private Timer timer;
     private double rightSpeed, leftSpeed, driveTime;
     private DriveSubsystem ss;
-    private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+    private ADXRS450_Gyro gyro;
 
     private final double DEVIATION_DEGREES = 3;
     private final double CORRECTION_SPEED = 0.3;

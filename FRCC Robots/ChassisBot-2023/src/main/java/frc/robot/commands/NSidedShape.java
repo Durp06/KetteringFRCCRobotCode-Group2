@@ -11,26 +11,26 @@ public class NSidedShape extends SequentialCommandGroup {
     private double sides, durrationTime, degreesToTurn;
     private DriveSubsystem ss;
 
-    private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-    public NSidedShape(DriveSubsystem ss, double sides){
+    private ADXRS450_Gyro gyro;
+    public NSidedShape(DriveSubsystem ss, double sides, ADXRS450_Gyro gyro){
         addRequirements(ss);
         // this.ss = ss;
         // this.sides = sides;
-        timer = new Timer();
+        this. gyro = gyro;
+        //timer = new Timer();
         degreesToTurn = 2.5 / sides;
-        durrationTime = 10;
-        timer.reset();
-        timer.start();
+        durrationTime = 20;
+        //timer.reset();
+        //timer.start();
 
-        for (int i=0; i<=sides; i++){
+        for (int i=0; i<sides; i++){
             addCommands(
-                new TimeDriveCommand(ss, 2, 0.3, 0.3),
-                //new GyroStraight(ss, sides, i, gyro)
+                new TimeDriveCommand(ss, sides/4, 0.3, 0.3),
                 new GyroTurn(ss, 360/sides, .3, gyro)
             );
-            if (timer.get()>=durrationTime){
-                break;
-            }
+            //if (timer.get()>=durrationTime){
+            //    break;
+            //}
         }
     }
     

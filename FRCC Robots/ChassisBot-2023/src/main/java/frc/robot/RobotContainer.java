@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -19,6 +23,7 @@ import frc.robot.Constants.AvalButtons;
 import frc.robot.Constants.AvalDriveModes;
 import frc.robot.commands.AuxCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.GyroStraight;
 import frc.robot.commands.GyroTurn;
 import frc.robot.commands.NSidedShape;
 import frc.robot.commands.TimeDriveCommand;
@@ -63,7 +68,7 @@ public class RobotContainer {
   private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer(Random rand) {
     // Configure the button bindings
     configureButtonBindings();
 
@@ -75,6 +80,9 @@ public class RobotContainer {
 
     autonSelector.addOption("Better Gyro Turn", new GyroTurn(m_driveSubsystem, 180, 0.5, gyro));
 
+
+    autonSelector.addOption("GyroStraight", new GyroStraight(m_driveSubsystem, 0.3, 3, gyro));
+
     //autonSelector.addOption("Gyro Turn", new TurnByGyro(m_driveSubsystem, gyro, 90, 0.5));
 
     autonSelector.addOption("Straight", new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3));
@@ -85,8 +93,9 @@ public class RobotContainer {
       new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3)
       ));
 
-      autonSelector.addOption("NSidedShape", new NSidedShape(m_driveSubsystem, 4));
-
+      autonSelector.addOption("NSidedShape", new NSidedShape(m_driveSubsystem,  5, gyro));
+      autonSelector.addOption("NSidedRand", new NSidedShape(m_driveSubsystem, (int) rand.nextDouble() * Integer.MAX_VALUE, gyro));
+      //Use that for when you want to do horrible things to the robot
     SmartDashboard.putData("Auton Selector", autonSelector);
 
     gyro.calibrate();

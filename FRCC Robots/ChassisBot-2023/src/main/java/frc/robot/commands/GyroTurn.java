@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -10,7 +11,7 @@ public class GyroTurn extends CommandBase {
     private Timer timer;
     private double rightSpeed, leftSpeed, turnDegrees;
     private DriveSubsystem ss;
-    private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+    private ADXRS450_Gyro gyro;
 
 
     public GyroTurn(DriveSubsystem ss, double turnDegrees, double speed, ADXRS450_Gyro gyro){
@@ -49,10 +50,12 @@ public class GyroTurn extends CommandBase {
     @Override
     public void execute(){
         double error = turnDegrees - gyro.getAngle();
-        double output = error * 0.15;
+        double output = error * 0.2;
         output = MathUtil.clamp(output, -rightSpeed, rightSpeed);
-        
+
         ss.arcadeDrive(0, output);
+
+        SmartDashboard.putNumber("Gyro", gyro.getAngle());
     }
 
     @Override
