@@ -8,7 +8,7 @@ public class TimeDriveCommand extends CommandBase {
     private Timer timer;
     private double leftSpeed, rightSpeed, durrationTime;
     private DriveSubsystem ss;
-    
+
     public TimeDriveCommand(DriveSubsystem ss, double durrationTime, double leftSpeed, double rightSpeed){
         addRequirements(ss);
         this.ss = ss;

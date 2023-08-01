@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -57,6 +58,8 @@ public class RobotContainer {
 
   private SendableChooser<Command> autonSelector = new SendableChooser<>();
 
+  private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -79,6 +82,8 @@ public class RobotContainer {
       autonSelector.addOption("NSidedShape", new NSidedShape(m_driveSubsystem, 4));
 
     SmartDashboard.putData("Auton Selector", autonSelector);
+
+    gyro.calibrate();
   }
 
   // Set Subsystem Default Commands
