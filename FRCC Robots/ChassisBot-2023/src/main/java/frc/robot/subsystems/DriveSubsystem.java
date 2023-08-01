@@ -35,12 +35,12 @@ public class DriveSubsystem extends SubsystemBase {
     frontLeft.set(left);
   }
 
-  public void tankDrive(double lSpeed, double rSpeed) {
+  public void tankDrive(double rspeed, double lspeed) {
 
-    rearRight.set(rSpeed);
-    frontRight.set(rSpeed);
-    rearLeft.set(lSpeed);
-    frontLeft.set(lSpeed);
+    rearRight.set(lspeed);
+    frontRight.set(lspeed);
+    rearLeft.set(rspeed);
+    frontLeft.set(rspeed);
   }
 
   @Override

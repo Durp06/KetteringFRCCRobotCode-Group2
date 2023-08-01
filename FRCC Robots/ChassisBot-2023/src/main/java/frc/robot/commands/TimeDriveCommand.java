@@ -6,21 +6,21 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class TimeDriveCommand extends CommandBase {
     private Timer timer;
-    private double leftSpeed, rightSpeed, durrationTime;
+    private double rightSpeed, leftSpeed, durrationTime;
     private DriveSubsystem ss;
 
-    public TimeDriveCommand(DriveSubsystem ss, double durrationTime, double leftSpeed, double rightSpeed){
+    public TimeDriveCommand(DriveSubsystem ss, double durrationTime, double rightSpeed, double leftSpeed){
         addRequirements(ss);
         this.ss = ss;
         this.durrationTime = durrationTime;
-        this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
+        this.leftSpeed = leftSpeed;
         timer = new Timer();
     }
 
     @Override
     public void initialize(){
-        ss.tankDrive(rightSpeed, leftSpeed);
+        ss.tankDrive(leftSpeed, rightSpeed);
         timer.reset();
         timer.start();
     }

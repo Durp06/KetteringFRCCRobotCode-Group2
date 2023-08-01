@@ -5,20 +5,22 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class GyroTurn extends CommandBase {
+public class GyroStraight extends CommandBase {
     private Timer timer;
-    private double rightSpeed, leftSpeed, turnDegrees;
+    private double rightSpeed, leftSpeed, driveTime;
     private DriveSubsystem ss;
     private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
+    private final double DEVIATION_DEGREES = 3;
+    private final double CORRECTION_SPEED = 0.3;
 
-    public GyroTurn(DriveSubsystem ss, double turnDegrees, double speed, ADXRS450_Gyro gyro){
+    public GyroStraight(DriveSubsystem ss, double speed, double driveTime, ADXRS450_Gyro gyro){
         addRequirements(ss);
         this.ss = ss;
-        this.turnDegrees = turnDegrees;
         this.rightSpeed = speed;
         this.leftSpeed = speed;
         this.gyro = gyro;
+        this.driveTime = driveTime;
         timer = new Timer();
     }
 
@@ -26,27 +28,28 @@ public class GyroTurn extends CommandBase {
     public void initialize(){
         double rspeed = rightSpeed;
         double lspeed = leftSpeed;
-        boolean direction = false; //false = negative/left and true =
-
-        if (turnDegrees > 0 )
-            lspeed = -leftSpeed;
-        else
-            lspeed = leftSpeed;
-        if (turnDegrees < 0)
-            rspeed = -rightSpeed;
-        else
-            rspeed = rightSpeed;
         
         gyro.reset();
 
         timer.reset();
         timer.start();
 
-        ss.tankDrive(lspeed, rspeed);
+        ss.tankDrive(leftSpeed, rightSpeed);
     }
 
     @Override
-    public void execute(){}
+    public void execute(){
+        double degrees = gyro.getRotation2d().getDegrees();
+
+        if (degrees >= DEVIATION_DEGREES){
+            ss.tankDrive(leftSpeed + CORRECTION_SPEED, rightSpeed);
+        } else if(degrees <= -DEVIATION_DEGREES){
+            ss.tankDrive(leftSpeed, rightSpeed + CORRECTION_SPEED);
+        } else {
+            ss.tankDrive(leftSpeed, rightSpeed);
+        }
+    
+    }
 
     @Override
     public void end(boolean interrupted){
@@ -56,12 +59,8 @@ public class GyroTurn extends CommandBase {
 
     @Override
     public boolean isFinished(){
-        double degrees = gyro.getRotation2d().getDegrees();
+        return timer.get()>=driveTime;
 
-        if (degrees >= turnDegrees){
-            return true;
-        }
-        return false;
     }
 }
 
