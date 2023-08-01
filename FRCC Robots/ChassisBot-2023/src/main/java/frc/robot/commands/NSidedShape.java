@@ -23,14 +23,14 @@ public class NSidedShape extends SequentialCommandGroup {
         for (int i=0; i<=sides; i++){
             addCommands(
                 new TimeDriveCommand(ss, 2, 0.5, 0.5),
-                new TimeDriveCommand(ss, degreesToTurn, 0.5, -0.5)
+                new GyroTurn(ss, sides, .5, null)
             );
             if (timer.get()>=durrationTime){
                 break;
             }
         }
     }
-
+    
     // @Override
     // public void initialize(){
     // degreesToTurn = 2.5 / sides;
