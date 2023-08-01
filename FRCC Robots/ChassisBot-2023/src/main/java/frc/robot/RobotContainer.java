@@ -19,8 +19,10 @@ import frc.robot.Constants.AvalButtons;
 import frc.robot.Constants.AvalDriveModes;
 import frc.robot.commands.AuxCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.GyroTurn;
 import frc.robot.commands.NSidedShape;
 import frc.robot.commands.TimeDriveCommand;
+import frc.robot.commands.TurnByGyro;
 import frc.robot.subsystems.AuxSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,6 +72,10 @@ public class RobotContainer {
 
     // Setup shuffleboard "Main Dashboard"
     setupShuffleboardDashboard();
+
+    autonSelector.addOption("Better Gyro Turn", new GyroTurn(m_driveSubsystem, 180, 0.5, gyro));
+
+    //autonSelector.addOption("Gyro Turn", new TurnByGyro(m_driveSubsystem, gyro, 90, 0.5));
 
     autonSelector.addOption("Straight", new TimeDriveCommand(m_driveSubsystem, 3, 0.3, 0.3));
     

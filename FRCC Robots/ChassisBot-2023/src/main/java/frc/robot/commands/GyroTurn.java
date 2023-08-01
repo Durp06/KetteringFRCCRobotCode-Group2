@@ -51,7 +51,7 @@ public class GyroTurn extends CommandBase {
         double error = turnDegrees - gyro.getAngle();
         double output = error * 0.15;
         output = MathUtil.clamp(output, -rightSpeed, rightSpeed);
-
+        
         ss.arcadeDrive(0, output);
     }
 
