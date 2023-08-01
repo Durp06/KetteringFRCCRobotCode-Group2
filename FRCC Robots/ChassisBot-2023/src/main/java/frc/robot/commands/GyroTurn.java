@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -46,7 +47,13 @@ public class GyroTurn extends CommandBase {
     }
 
     @Override
-    public void execute(){}
+    public void execute(){
+        double error = turnDegrees - gyro.getAngle();
+        double output = error * 0.15;
+        output = MathUtil.clamp(output, -rightSpeed, rightSpeed);
+
+        ss.arcadeDrive(0, output);
+    }
 
     @Override
     public void end(boolean interrupted){
@@ -58,10 +65,7 @@ public class GyroTurn extends CommandBase {
     public boolean isFinished(){
         double degrees = gyro.getRotation2d().getDegrees();
 
-        if (degrees >= turnDegrees){
-            return true;
+        return turnDegrees - Math.abs(degrees) < 3;
         }
-        return false;
-    }
 }
 
